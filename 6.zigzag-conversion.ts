@@ -8,19 +8,14 @@
 function convert(s: string, numRows: number): string {
   const rows: string[] = new Array(numRows).fill("")
 
-  let count = 0
-  let up = true
-  while (count < s.length) {
-    for (let i = up ? 0 : 1; i < (up ? numRows : numRows - 1); i++) {
-      const char = s.charAt(count)
-
-      rows[up ? i : (numRows - i - 1)] += char
-
-      count++
-      if (count >= s.length) break
-    }
+  let direction = 1
+  let y = 0
+  for (let i = 0; i < s.length; i++) {
+    const char = s.charAt(i)
+    rows[y] += char
     
-    up = !up
+    if (numRows > 1) y += direction
+    if (y >= numRows - 1 || y <= 0) direction *= -1
   }
 
   return rows.join("")
